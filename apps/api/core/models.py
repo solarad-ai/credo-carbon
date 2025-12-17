@@ -63,6 +63,12 @@ class Project(Base):
     developer = relationship("User", back_populates="projects")
     documents = relationship("Document", back_populates="project")
 
+    @property
+    def country(self):
+        if self.wizard_data and isinstance(self.wizard_data, dict):
+            return self.wizard_data.get("country")
+        return None
+
 class Document(Base):
     __tablename__ = "documents"
 

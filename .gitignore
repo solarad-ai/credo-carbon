@@ -20,7 +20,7 @@ htmlcov/
 .env.*.local
 
 # Local Upload Folder
-./data/uploads
+data/uploads/
 
 # Database
 *.db
@@ -55,3 +55,7 @@ yarn-error.log*
 *.bak
 *.tmp
 *.temp
+
+# Project specific - remove from tracking
+CredoCarbon_Dashboard.txt
+next-env.d.ts

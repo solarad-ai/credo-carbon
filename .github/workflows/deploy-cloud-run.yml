@@ -111,9 +111,12 @@ jobs:
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
       - name: Build Web Docker image
+        env:
+          NEXT_PUBLIC_API_URL: ${{ env.API_URL || 'https://credocarbon-api-641001192587.asia-south2.run.app' }}
         run: |
+          echo "Building with API URL: $NEXT_PUBLIC_API_URL"
           docker build -f Dockerfile.web \
-            --build-arg NEXT_PUBLIC_API_URL=${{ env.API_URL }} \
+            --build-arg NEXT_PUBLIC_API_URL="$NEXT_PUBLIC_API_URL" \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:prod-${{ env.BUILD_ID }} \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:${{ env.GIT_COMMIT_SHORT }} \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:latest .

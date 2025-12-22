@@ -1,0 +1,107 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+      - gcp-dev
+
+env:
+  PROJECT_ID: 'prj-cicd-solarad'
+  REGION: 'asia-south2'
+  ARTIFACT_REPO: 'asia-south2-docker.pkg.dev/prj-cicd-solarad/repo-solarad-cicd-as2-01'
+
+jobs:
+  # Build and deploy API
+  deploy-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account: 'sa-org-terraform@prj-cicd-solarad.iam.gserviceaccount.com'
+          credentials_json: ${{ secrets.GCP_CICD_AUTH }}
+
+      - name: Set Environment Variables
+        run: |
+          echo "GIT_COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "BUILD_ID=${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build API Docker image
+        run: |
+          docker build -f Dockerfile.api \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:prod-${{ env.BUILD_ID }} \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:${{ env.GIT_COMMIT_SHORT }} \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:latest .
+
+      - name: Push API image
+        run: |
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:prod-${{ env.BUILD_ID }}
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:${{ env.GIT_COMMIT_SHORT }}
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:latest
+
+      - name: Deploy API to Cloud Run
+        run: |
+          gcloud run deploy credocarbon-api \
+            --image ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:latest \
+            --platform managed \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
+            --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }}" \
+            --port 8080
+
+  # Build and deploy Web
+  deploy-web:
+    runs-on: ubuntu-latest
+    needs: deploy-api  # Wait for API to deploy first
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account: 'sa-org-terraform@prj-cicd-solarad.iam.gserviceaccount.com'
+          credentials_json: ${{ secrets.GCP_CICD_AUTH }}
+
+      - name: Set Environment Variables
+        run: |
+          echo "GIT_COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "BUILD_ID=${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Get API URL
+        id: api-url
+        run: |
+          API_URL=$(gcloud run services describe credocarbon-api --region ${{ env.REGION }} --format 'value(status.url)')
+          echo "API_URL=${API_URL}" >> $GITHUB_ENV
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build Web Docker image
+        run: |
+          docker build -f Dockerfile.web \
+            --build-arg NEXT_PUBLIC_API_URL=${{ env.API_URL }} \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:prod-${{ env.BUILD_ID }} \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:${{ env.GIT_COMMIT_SHORT }} \
+            -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:latest .
+
+      - name: Push Web image
+        run: |
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:prod-${{ env.BUILD_ID }}
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:${{ env.GIT_COMMIT_SHORT }}
+          docker push ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:latest
+
+      - name: Deploy Web to Cloud Run
+        run: |
+          gcloud run deploy credocarbon-web \
+            --image ${{ env.ARTIFACT_REPO }}/prod/credocarbon-web:latest \
+            --platform managed \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --port 3000

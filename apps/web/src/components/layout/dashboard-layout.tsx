@@ -4,6 +4,7 @@ import { useState, useEffect, createContext, useContext } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { API_URL } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -227,7 +228,7 @@ export default function DashboardLayout({
             if (!token) return;
 
             try {
-                const response = await fetch("http://localhost:8000/api/auth/profile", {
+                const response = await fetch(`${API_URL}/auth/profile`, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                     },
@@ -303,7 +304,7 @@ export default function DashboardLayout({
             )}>
                 {/* Logo Header */}
                 <div className={cn(
-                    "h-20 flex items-center border-b border-slate-100 dark:border-slate-700/50 transition-all duration-300",
+                    "h-20 mt-2 flex items-center border-b border-slate-100 dark:border-slate-700/50 transition-all duration-300",
                     sidebarCollapsed ? "justify-center px-2" : "gap-4 px-6"
                 )}>
                     <div className={cn(

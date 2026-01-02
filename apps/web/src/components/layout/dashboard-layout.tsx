@@ -244,14 +244,27 @@ export default function DashboardLayout({
                     const userData = await response.json();
                     setUser(userData);
                     localStorage.setItem("user", JSON.stringify(userData));
-                } else {
-                    // Token is invalid, logout
+                } else if (response.status === 401) {
+                    // Only logout on 401 Unauthorized (invalid token)
+                    console.error('Token is invalid, logging out');
                     handleLogout();
+                } else {
+                    // For other errors (500, 404, etc), use cached user data
+                    console.warn(`Profile fetch failed with status ${response.status}, using cached data`);
+                    const cachedUser = localStorage.getItem("user");
+                    if (cachedUser) {
+                        setUser(JSON.parse(cachedUser));
+                    }
                 }
             } catch (error) {
+                // Network error or other exception - use cached data, don't logout
+                console.warn('Profile fetch error:', error);
                 const cachedUser = localStorage.getItem("user");
                 if (cachedUser) {
                     setUser(JSON.parse(cachedUser));
+                } else {
+                    // No cached user and network error - this is a problem
+                    console.error('No cached user data available');
                 }
             }
         };

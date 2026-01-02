@@ -24,7 +24,7 @@ interface Notification {
     link?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://credocarbon-api-641001192587.asia-south2.run.app";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 const typeIcons: Record<string, React.ReactNode> = {
     info: <Info className="h-5 w-5 text-blue-500" />,
@@ -44,7 +44,7 @@ export default function VVBNotificationsPage() {
 
     const fetchNotifications = async () => {
         try {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("token");
             const response = await fetch(`${API_BASE_URL}/api/notifications`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ export default function VVBNotificationsPage() {
 
     const markAsRead = async (notificationId: number) => {
         try {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("token");
             await fetch(`${API_BASE_URL}/api/notifications/${notificationId}/read`, {
                 method: "PUT",
                 headers: {
@@ -81,7 +81,7 @@ export default function VVBNotificationsPage() {
 
     const markAllAsRead = async () => {
         try {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("token");
             await fetch(`${API_BASE_URL}/api/notifications/read-all`, {
                 method: "PUT",
                 headers: {

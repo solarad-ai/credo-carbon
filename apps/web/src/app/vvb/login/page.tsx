@@ -39,7 +39,7 @@ export default function VVBLoginPage() {
             const data = await response.json();
 
             // Store tokens and user data
-            localStorage.setItem("access_token", data.access_token);
+            localStorage.setItem("token", data.access_token);
             localStorage.setItem("refresh_token", data.refresh_token);
             localStorage.setItem("user", JSON.stringify(data.user));
 

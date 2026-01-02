@@ -779,7 +779,7 @@ export default function BasicInfoWizardPage() {
                                     <Label htmlFor="legalEntity">Legal Entity Name</Label>
                                     <Input
                                         id="legalEntity"
-                                        placeholder="Enter Legal Entity Name"
+                                        placeholder=""
                                         value={formData.legalEntityName}
                                         onChange={(e) => setFormData({ ...formData, legalEntityName: e.target.value })}
                                         className="h-11"
@@ -809,7 +809,7 @@ export default function BasicInfoWizardPage() {
                                 <Label htmlFor="regNumber">Registration Number</Label>
                                 <Input
                                     id="regNumber"
-                                    placeholder="Enter Registration Number"
+                                    placeholder=""
                                     value={formData.registrationNumber}
                                     onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
                                     className="h-11"
@@ -842,7 +842,7 @@ export default function BasicInfoWizardPage() {
                                         <Label htmlFor="sigName">Full Name *</Label>
                                         <Input
                                             id="sigName"
-                                            placeholder="John Doe"
+                                            placeholder=""
                                             value={formData.signatoryName}
                                             onChange={(e) => setFormData({ ...formData, signatoryName: e.target.value })}
                                             className="h-11"
@@ -853,7 +853,7 @@ export default function BasicInfoWizardPage() {
                                         <Input
                                             id="sigEmail"
                                             type="email"
-                                            placeholder="john@company.com"
+                                            placeholder=""
                                             value={formData.signatoryEmail}
                                             onChange={(e) => setFormData({ ...formData, signatoryEmail: e.target.value })}
                                             className="h-11"
@@ -864,7 +864,7 @@ export default function BasicInfoWizardPage() {
                                         <Input
                                             id="sigPhone"
                                             type="tel"
-                                            placeholder="+91 98765 43210"
+                                            placeholder=""
                                             value={formData.signatoryPhone}
                                             onChange={(e) => setFormData({ ...formData, signatoryPhone: e.target.value })}
                                             className="h-11"
@@ -877,7 +877,7 @@ export default function BasicInfoWizardPage() {
                                 <Label htmlFor="ownerAddress">Registered Address *</Label>
                                 <Textarea
                                     id="ownerAddress"
-                                    placeholder="Full registered address of the company"
+                                    placeholder=""
                                     value={formData.ownerAddress}
                                     onChange={(e) => setFormData({ ...formData, ownerAddress: e.target.value })}
                                     rows={3}

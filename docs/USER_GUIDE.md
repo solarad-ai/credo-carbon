@@ -94,6 +94,371 @@ Select your project category:
 - Generate required documents
 - Submit for validation
 
+## Carbon Credit Calculation
+
+### Overview
+
+Carbon credits represent verified emission reductions or removals. One carbon credit = 1 tonne of CO₂ equivalent (tCO₂e) reduced or removed from the atmosphere.
+
+### Calculation Methodology
+
+The platform uses approved methodologies from major registries (Gold Standard, VCS, ACR) to calculate emission reductions.
+
+#### Basic Formula
+
+```
+Emission Reductions (ER) = Baseline Emissions (BE) - Project Emissions (PE) - Leakage (L)
+
+Carbon Credits = ER × (1 - Buffer %) × Crediting Period
+```
+
+### Step-by-Step Calculation
+
+#### 1. Baseline Emissions (BE)
+
+**Definition**: Emissions that would occur without the project (business-as-usual scenario)
+
+**For Renewable Energy Projects:**
+```
+BE = Electricity Generated (MWh) × Grid Emission Factor (tCO₂/MWh)
+```
+
+**Example - Solar Project:**
+```
+Annual Generation: 10,000 MWh
+Grid Emission Factor: 0.82 tCO₂/MWh
+BE = 10,000 × 0.82 = 8,200 tCO₂/year
+```
+
+**For Forestry Projects (A/R, REDD+):**
+```
+BE = Area (ha) × Carbon Stock Change (tCO₂/ha/year)
+```
+
+**For Energy Efficiency:**
+```
+BE = Energy Saved (MWh) × Fuel Emission Factor (tCO₂/MWh)
+```
+
+#### 2. Project Emissions (PE)
+
+**Definition**: Emissions from project activities
+
+**For Renewable Energy:**
+```
+PE = Construction Emissions + O&M Emissions + Grid Losses
+```
+
+Usually minimal (0-5% of baseline)
+
+**For Forestry:**
+```
+PE = Harvesting + Transport + Processing Emissions
+```
+
+**Example:**
+```
+Construction: 100 tCO₂ (one-time)
+Annual O&M: 50 tCO₂/year
+Amortized over 25 years: (100/25) + 50 = 54 tCO₂/year
+```
+
+#### 3. Leakage (L)
+
+**Definition**: Emissions that occur outside project boundary due to project activities
+
+**Typical Leakage Rates:**
+- Renewable Energy: 0-2%
+- Forestry (A/R): 10-20%
+- REDD+: 15-30%
+- Energy Efficiency: 5-10%
+
+**Example:**
+```
+Baseline Emissions: 8,200 tCO₂
+Leakage Rate: 2%
+L = 8,200 × 0.02 = 164 tCO₂/year
+```
+
+#### 4. Net Emission Reductions
+
+```
+ER = BE - PE - L
+ER = 8,200 - 54 - 164 = 7,982 tCO₂/year
+```
+
+#### 5. Buffer Withholding
+
+**Purpose**: Risk mitigation for non-permanence (mainly for forestry/land-use projects)
+
+**Buffer Rates by Project Type:**
+- Renewable Energy: 0%
+- Energy Efficiency: 0%
+- Forestry (A/R): 10-20%
+- REDD+: 20-30%
+- Biochar: 5-10%
+
+**Example (Solar - No Buffer):**
+```
+Annual Credits = 7,982 × (1 - 0%) = 7,982 tCO₂e
+```
+
+**Example (Forestry - 15% Buffer):**
+```
+Annual Credits = 7,982 × (1 - 0.15) = 6,785 tCO₂e
+```
+
+#### 6. Crediting Period
+
+**Total Credits Over Project Lifetime:**
+```
+Total Credits = Annual Credits × Crediting Period (years)
+```
+
+**Example:**
+```
+Annual Credits: 7,982 tCO₂e
+Crediting Period: 10 years
+Total Credits = 7,982 × 10 = 79,820 tCO₂e
+```
+
+### Project-Specific Calculations
+
+#### Solar Energy Project
+
+```
+Input Data:
+- Installed Capacity: 5 MW
+- Capacity Factor: 20%
+- Grid Emission Factor: 0.82 tCO₂/MWh
+- Project Life: 25 years
+- Crediting Period: 10 years
+
+Calculation:
+1. Annual Generation = 5,000 kW × 8,760 hours × 0.20 = 8,760 MWh
+2. Baseline Emissions = 8,760 × 0.82 = 7,183 tCO₂/year
+3. Project Emissions = ~50 tCO₂/year (O&M)
+4. Leakage = 7,183 × 0.02 = 144 tCO₂/year
+5. Net ER = 7,183 - 50 - 144 = 6,989 tCO₂/year
+6. Buffer = 0% (renewable energy)
+7. Annual Credits = 6,989 tCO₂e
+8. 10-Year Credits = 6,989 × 10 = 69,890 tCO₂e
+```
+
+#### Afforestation/Reforestation (A/R)
+
+```
+Input Data:
+- Area: 100 hectares
+- Carbon Sequestration Rate: 10 tCO₂/ha/year
+- Project Duration: 30 years
+- Crediting Period: 20 years
+- Buffer: 15%
+
+Calculation:
+1. Annual Sequestration = 100 × 10 = 1,000 tCO₂/year
+2. Baseline = 0 (degraded land)
+3. Project Emissions = 20 tCO₂/year (maintenance)
+4. Leakage = 1,000 × 0.15 = 150 tCO₂/year
+5. Net ER = 1,000 - 20 - 150 = 830 tCO₂/year
+6. Buffer Withholding = 830 × 0.15 = 125 tCO₂/year
+7. Annual Credits = 830 - 125 = 705 tCO₂e
+8. 20-Year Credits = 705 × 20 = 14,100 tCO₂e
+```
+
+#### Wind Energy Project
+
+```
+Input Data:
+- Installed Capacity: 10 MW
+- Capacity Factor: 30%
+- Grid Emission Factor: 0.75 tCO₂/MWh
+- Crediting Period: 10 years
+
+Calculation:
+1. Annual Generation = 10,000 kW × 8,760 × 0.30 = 26,280 MWh
+2. Baseline Emissions = 26,280 × 0.75 = 19,710 tCO₂/year
+3. Project Emissions = 100 tCO₂/year
+4. Leakage = 19,710 × 0.02 = 394 tCO₂/year
+5. Net ER = 19,710 - 100 - 394 = 19,216 tCO₂/year
+6. Annual Credits = 19,216 tCO₂e
+7. 10-Year Credits = 192,160 tCO₂e
+```
+
+### Monitoring & Verification
+
+#### Annual Monitoring
+
+Projects must monitor and report actual performance annually:
+
+1. **Actual Generation/Activity Data**
+   - Meter readings
+   - Satellite imagery (forestry)
+   - Field measurements
+
+2. **Recalculation**
+   ```
+   Actual Credits = Actual Performance × Emission Factor × (1 - Buffer%)
+   ```
+
+3. **Adjustments**
+   - If actual < projected: Credits reduced
+   - If actual > projected: Additional credits issued
+
+#### Verification Process
+
+1. **VVB Review**
+   - Verify monitoring data
+   - Validate calculations
+   - Check methodology compliance
+
+2. **Verified Emission Reductions (VERs)**
+   ```
+   VERs = Verified Annual ER × Monitoring Period
+   ```
+
+3. **Credit Issuance**
+   - Registry reviews VVB report
+   - Issues credits to project account
+   - Credits become tradeable
+
+### Key Factors Affecting Credit Quantity
+
+| Factor | Impact | Typical Range |
+|--------|--------|---------------|
+| **Grid Emission Factor** | Higher = More credits | 0.3-1.2 tCO₂/MWh |
+| **Project Efficiency** | Higher = More credits | 15-95% |
+| **Leakage Rate** | Higher = Fewer credits | 0-30% |
+| **Buffer Percentage** | Higher = Fewer credits | 0-30% |
+| **Monitoring Period** | Longer = More credits | 1-30 years |
+| **Baseline Scenario** | Conservative = Fewer credits | Varies |
+
+### Additionality Requirement
+
+**Critical**: Projects must prove they wouldn't happen without carbon finance.
+
+**Tests:**
+1. **Investment Analysis**: Project not financially viable without carbon revenue
+2. **Barrier Analysis**: Significant barriers overcome by carbon finance
+3. **Common Practice**: Project not common practice in region
+
+**Impact on Credits:**
+- If additionality not proven: **0 credits** (project rejected)
+- If proven: Full credits as calculated
+
+### Platform Tools
+
+The CredoCarbon platform provides:
+
+1. **Credit Calculator**
+   - Input project parameters
+   - Auto-calculates expected credits
+   - Compares methodologies
+
+2. **Baseline Database**
+   - Grid emission factors by country
+   - Default leakage rates
+   - Buffer percentages by project type
+
+3. **Monitoring Dashboard**
+   - Track actual vs. projected
+   - Automatic recalculation
+   - Variance alerts
+
+4. **Verification Support**
+   - Pre-filled monitoring reports
+   - Data validation
+   - VVB collaboration tools
+
+### Example: Complete Project Calculation
+
+**Project**: 50 MW Solar Farm in India
+
+```
+Step 1: Project Data
+- Capacity: 50 MW
+- Capacity Factor: 19% (India average)
+- Location: Maharashtra
+- Grid Emission Factor: 0.82 tCO₂/MWh (CEA data)
+- Crediting Period: 10 years
+
+Step 2: Annual Generation
+= 50,000 kW × 8,760 hours × 0.19
+= 83,220 MWh/year
+
+Step 3: Baseline Emissions
+= 83,220 MWh × 0.82 tCO₂/MWh
+= 68,240 tCO₂/year
+
+Step 4: Project Emissions
+- Construction (amortized): 200 tCO₂/year
+- O&M: 150 tCO₂/year
+- Total PE = 350 tCO₂/year
+
+Step 5: Leakage (2%)
+= 68,240 × 0.02
+= 1,365 tCO₂/year
+
+Step 6: Net Emission Reductions
+= 68,240 - 350 - 1,365
+= 66,525 tCO₂/year
+
+Step 7: Buffer (0% for renewable)
+= 0 tCO₂/year
+
+Step 8: Annual Credits
+= 66,525 tCO₂e/year
+
+Step 9: Total Credits (10 years)
+= 66,525 × 10
+= 665,250 tCO₂e
+
+Step 10: Market Value (at $15/credit)
+= 665,250 × $15
+= $9,978,750
+```
+
+### Tips for Maximizing Credits
+
+1. **Choose High-Impact Locations**
+   - Higher grid emission factors = more credits
+   - Countries with coal-heavy grids preferred
+
+2. **Optimize Project Design**
+   - Maximize efficiency
+   - Minimize project emissions
+   - Use proven technology
+
+3. **Conservative Baseline**
+   - Use approved methodologies
+   - Document assumptions
+   - Avoid over-estimation
+
+4. **Robust Monitoring**
+   - Accurate data collection
+   - Regular calibration
+   - Third-party verification
+
+5. **Long Crediting Periods**
+   - Maximize total credits
+   - Balance with technology life
+   - Consider market trends
+
+### Common Mistakes to Avoid
+
+❌ **Over-estimating baseline** - Leads to rejection
+❌ **Ignoring leakage** - Credits will be reduced
+❌ **Poor monitoring** - Verification issues
+❌ **Wrong methodology** - Project may not qualify
+❌ **Inadequate additionality proof** - Project rejected
+
+✅ **Use platform calculator** - Accurate estimates
+✅ **Follow approved methodologies** - Ensure compliance
+✅ **Document everything** - Smooth validation
+✅ **Engage VVB early** - Avoid issues later
+
+
+
 ## Project Lifecycle
 
 ```

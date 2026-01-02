@@ -29,7 +29,7 @@ interface Project {
     open_queries: number;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://credocarbon-api-641001192587.asia-south2.run.app";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 const statusColors: Record<string, string> = {
     PENDING: "bg-amber-500/10 text-amber-600 border-amber-500/20",
@@ -52,8 +52,8 @@ export default function VVBProjectsPage() {
 
     const fetchProjects = async () => {
         try {
-            const token = localStorage.getItem("access_token");
-            const response = await fetch(`${API_BASE_URL}/api/vvb/dashboard/projects`, {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${API_BASE_URL}/vvb/dashboard/projects`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

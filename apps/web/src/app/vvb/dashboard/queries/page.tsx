@@ -45,7 +45,7 @@ interface Query {
     project_name?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://credocarbon-api-641001192587.asia-south2.run.app";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 const statusColors: Record<string, string> = {
     OPEN: "bg-amber-500/10 text-amber-600 border-amber-500/20",
@@ -78,8 +78,8 @@ export default function VVBQueriesPage() {
 
     const fetchQueries = async () => {
         try {
-            const token = localStorage.getItem("access_token");
-            const response = await fetch(`${API_BASE_URL}/api/vvb/queries`, {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${API_BASE_URL}/vvb/queries`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -100,8 +100,8 @@ export default function VVBQueriesPage() {
 
     const handleResolve = async (queryId: number) => {
         try {
-            const token = localStorage.getItem("access_token");
-            const response = await fetch(`${API_BASE_URL}/api/vvb/queries/${queryId}/resolve`, {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${API_BASE_URL}/vvb/queries/${queryId}/resolve`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

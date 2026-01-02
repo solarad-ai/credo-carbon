@@ -51,7 +51,7 @@ export default function VVBDashboardLayout({
     useEffect(() => {
         setMounted(true);
         // Check authentication
-        const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("token");
         const userData = localStorage.getItem("user");
 
         if (!token || !userData) {
@@ -72,7 +72,7 @@ export default function VVBDashboardLayout({
     }, [router]);
 
     const handleLogout = () => {
-        localStorage.removeItem("access_token");
+        localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
         localStorage.removeItem("token");

@@ -357,6 +357,208 @@
             </table>
         </div>
         
+        <!-- Carbon Credit Calculation -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🧮</div>
+                <h2>Carbon Credit Calculation</h2>
+            </div>
+            
+            <p style="margin-bottom: 20px; color: #475569;">
+                Understanding how carbon credits are calculated is crucial for project planning and financial forecasting. 
+                One carbon credit represents <strong>1 tonne of CO₂ equivalent (tCO₂e)</strong> reduced or removed from the atmosphere.
+            </p>
+            
+            <div style="background: linear-gradient(135deg, #f0fdf4, #ecfdf5); padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #10b981;">
+                <h3 style="color: #059669; margin-bottom: 15px;">📐 Basic Formula</h3>
+                <div style="background: white; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 14px;">
+                    <strong style="color: #059669;">Emission Reductions (ER)</strong> = Baseline Emissions (BE) - Project Emissions (PE) - Leakage (L)
+                    <br><br>
+                    <strong style="color: #059669;">Carbon Credits</strong> = ER × (1 - Buffer %) × Crediting Period
+                </div>
+            </div>
+            
+            <h3 style="color: #059669; margin: 25px 0 15px 0;">Step-by-Step Calculation</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Baseline Emissions (BE)</h3>
+                    <p><strong>Definition:</strong> Emissions that would occur without the project (business-as-usual scenario)</p>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 13px;">
+                        <strong>For Renewable Energy:</strong><br>
+                        BE = Electricity Generated (MWh) × Grid Emission Factor (tCO₂/MWh)<br><br>
+                        <strong>Example:</strong> 10,000 MWh × 0.82 tCO₂/MWh = 8,200 tCO₂/year
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Project Emissions (PE)</h3>
+                    <p><strong>Definition:</strong> Emissions from project activities (construction, O&M, grid losses)</p>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 13px;">
+                        Construction: 100 tCO₂ (one-time)<br>
+                        Annual O&M: 50 tCO₂/year<br>
+                        Amortized over 25 years: (100/25) + 50 = <strong>54 tCO₂/year</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Leakage (L)</h3>
+                    <p><strong>Definition:</strong> Emissions outside project boundary due to project activities</p>
+                    <table style="margin-top: 10px; font-size: 14px;">
+                        <tr>
+                            <th>Project Type</th>
+                            <th>Typical Leakage Rate</th>
+                        </tr>
+                        <tr>
+                            <td>Renewable Energy</td>
+                            <td>0-2%</td>
+                        </tr>
+                        <tr>
+                            <td>Forestry (A/R)</td>
+                            <td>10-20%</td>
+                        </tr>
+                        <tr>
+                            <td>REDD+</td>
+                            <td>15-30%</td>
+                        </tr>
+                        <tr>
+                            <td>Energy Efficiency</td>
+                            <td>5-10%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Buffer Withholding</h3>
+                    <p><strong>Purpose:</strong> Risk mitigation for non-permanence (mainly forestry/land-use projects)</p>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                        <strong>Buffer Rates:</strong>
+                        <ul style="margin: 10px 0 0 20px; color: #64748b;">
+                            <li>Renewable Energy: 0%</li>
+                            <li>Energy Efficiency: 0%</li>
+                            <li>Forestry (A/R): 10-20%</li>
+                            <li>REDD+: 20-30%</li>
+                            <li>Biochar: 5-10%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="color: #059669; margin: 30px 0 15px 0;">📊 Complete Example: 50 MW Solar Farm</h3>
+            
+            <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); padding: 25px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                <div style="background: white; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;">
+                    <strong style="color: #3b82f6;">Project Data:</strong><br>
+                    • Installed Capacity: 50 MW<br>
+                    • Capacity Factor: 19% (India average)<br>
+                    • Grid Emission Factor: 0.82 tCO₂/MWh<br>
+                    • Crediting Period: 10 years<br><br>
+                    
+                    <strong style="color: #3b82f6;">Calculation:</strong><br>
+                    1. Annual Generation = 50,000 kW × 8,760 hours × 0.19 = <strong>83,220 MWh</strong><br>
+                    2. Baseline Emissions = 83,220 × 0.82 = <strong>68,240 tCO₂/year</strong><br>
+                    3. Project Emissions = <strong>350 tCO₂/year</strong> (construction + O&M)<br>
+                    4. Leakage (2%) = 68,240 × 0.02 = <strong>1,365 tCO₂/year</strong><br>
+                    5. Net ER = 68,240 - 350 - 1,365 = <strong>66,525 tCO₂/year</strong><br>
+                    6. Buffer = <strong>0%</strong> (renewable energy)<br>
+                    7. Annual Credits = <strong>66,525 tCO₂e/year</strong><br>
+                    8. <span style="background: #10b981; color: white; padding: 3px 8px; border-radius: 4px;">Total 10-Year Credits = 665,250 tCO₂e</span><br>
+                    9. <span style="background: #059669; color: white; padding: 3px 8px; border-radius: 4px;">Market Value @ $15/credit = $9,978,750</span>
+                </div>
+            </div>
+            
+            <h3 style="color: #059669; margin: 30px 0 15px 0;">🎯 Key Factors Affecting Credits</h3>
+            
+            <table>
+                <tr>
+                    <th>Factor</th>
+                    <th>Impact</th>
+                    <th>Typical Range</th>
+                </tr>
+                <tr>
+                    <td><strong>Grid Emission Factor</strong></td>
+                    <td>Higher = More credits</td>
+                    <td>0.3-1.2 tCO₂/MWh</td>
+                </tr>
+                <tr>
+                    <td><strong>Project Efficiency</strong></td>
+                    <td>Higher = More credits</td>
+                    <td>15-95%</td>
+                </tr>
+                <tr>
+                    <td><strong>Leakage Rate</strong></td>
+                    <td>Higher = Fewer credits</td>
+                    <td>0-30%</td>
+                </tr>
+                <tr>
+                    <td><strong>Buffer Percentage</strong></td>
+                    <td>Higher = Fewer credits</td>
+                    <td>0-30%</td>
+                </tr>
+                <tr>
+                    <td><strong>Crediting Period</strong></td>
+                    <td>Longer = More credits</td>
+                    <td>1-30 years</td>
+                </tr>
+            </table>
+            
+            <h3 style="color: #059669; margin: 30px 0 15px 0;">✅ Tips for Maximizing Credits</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🌍 High-Impact Locations</h3>
+                    <p>Choose countries with higher grid emission factors (coal-heavy grids) to maximize baseline emissions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>⚡ Optimize Design</h3>
+                    <p>Maximize project efficiency, minimize project emissions, and use proven technology.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📊 Conservative Baseline</h3>
+                    <p>Use approved methodologies, document all assumptions, and avoid over-estimation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📈 Robust Monitoring</h3>
+                    <p>Implement accurate data collection, regular calibration, and third-party verification.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #dc2626; margin: 30px 0 15px 0;">⚠️ Common Mistakes to Avoid</h3>
+            
+            <div style="background: #fef2f2; padding: 20px; border-radius: 12px; border-left: 4px solid #dc2626;">
+                <ul style="margin: 0; padding-left: 20px; color: #991b1b;">
+                    <li style="margin-bottom: 10px;"><strong>Over-estimating baseline</strong> - Leads to project rejection</li>
+                    <li style="margin-bottom: 10px;"><strong>Ignoring leakage</strong> - Credits will be reduced during verification</li>
+                    <li style="margin-bottom: 10px;"><strong>Poor monitoring</strong> - Causes verification issues and delays</li>
+                    <li style="margin-bottom: 10px;"><strong>Wrong methodology</strong> - Project may not qualify for credits</li>
+                    <li><strong>Inadequate additionality proof</strong> - Project will be rejected</li>
+                </ul>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #f0fdf4, #ecfdf5); padding: 20px; border-radius: 12px; margin-top: 20px; border-left: 4px solid #10b981;">
+                <h4 style="color: #059669; margin-bottom: 10px;">💡 Platform Tools Available</h4>
+                <ul style="margin: 0; padding-left: 20px; color: #475569;">
+                    <li style="margin-bottom: 8px;"><strong>Credit Calculator</strong> - Auto-calculates expected credits based on project parameters</li>
+                    <li style="margin-bottom: 8px;"><strong>Baseline Database</strong> - Grid emission factors by country and default rates</li>
+                    <li style="margin-bottom: 8px;"><strong>Monitoring Dashboard</strong> - Track actual vs. projected with variance alerts</li>
+                    <li><strong>Verification Support</strong> - Pre-filled reports and VVB collaboration tools</li>
+                </ul>
+            </div>
+        </div>
+        
         <!-- Project Lifecycle -->
         <div class="section">
             <div class="section-header">

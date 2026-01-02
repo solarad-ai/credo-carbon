@@ -24,7 +24,7 @@ interface DashboardStats {
     completed_this_month: number;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://credocarbon-api-641001192587.asia-south2.run.app";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 export default function VVBDashboardPage() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -37,8 +37,8 @@ export default function VVBDashboardPage() {
 
     const fetchDashboardStats = async () => {
         try {
-            const token = localStorage.getItem("access_token");
-            const response = await fetch(`${API_BASE_URL}/api/vvb/dashboard/stats`, {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${API_BASE_URL}/vvb/dashboard/stats`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

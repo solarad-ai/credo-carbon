@@ -128,7 +128,7 @@ export default function CreateProjectPage() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${API_URL}/api/projects`, {
+            const response = await fetch(`${API_URL}/projects`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

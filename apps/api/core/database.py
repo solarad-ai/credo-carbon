@@ -13,7 +13,15 @@ if "sqlite" in DATABASE_URL:
         DATABASE_URL, connect_args={"check_same_thread": False}
     )
 else:
-    engine = create_engine(DATABASE_URL)
+    # Configure connection pool settings for cloud databases
+    engine = create_engine(
+        DATABASE_URL,
+        pool_size=5,
+        max_overflow=10,
+        pool_timeout=30,
+        pool_recycle=1800,  # Recycle connections after 30 minutes
+        pool_pre_ping=True,  # Enable connection health checks
+    )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -53,8 +53,12 @@ async def lifespan(app: FastAPI):
     """Application lifespan events."""
     # Startup
     logger.info(f"Starting CredoCarbon API (env={settings.env}, cloud={settings.cloud.provider})")
-    Base.metadata.create_all(bind=engine)
-    logger.info("Database tables created/verified")
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables created/verified")
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+        logger.warning("Application will continue but database operations may fail")
     
     yield
     

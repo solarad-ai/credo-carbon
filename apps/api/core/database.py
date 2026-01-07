@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 import os
 from dotenv import load_dotenv
 
@@ -13,14 +14,12 @@ if "sqlite" in DATABASE_URL:
         DATABASE_URL, connect_args={"check_same_thread": False}
     )
 else:
-    # Configure connection pool settings for cloud databases
+    # Use NullPool for serverless environments (Cloud Run)
+    # NullPool creates a new connection for each request and closes immediately
+    # This works better with external connection poolers like Supabase's pgbouncer
     engine = create_engine(
         DATABASE_URL,
-        pool_size=5,
-        max_overflow=10,
-        pool_timeout=30,
-        pool_recycle=1800,  # Recycle connections after 30 minutes
-        pool_pre_ping=True,  # Enable connection health checks
+        poolclass=NullPool,  # No local pooling - let Supabase handle it
     )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -33,3 +32,4 @@ def get_db():
         yield db
     finally:
         db.close()
+

@@ -19,6 +19,8 @@ import {
     Menu,
     X,
     UserCog,
+    UserCheck,
+    Building2,
     ListTodo,
     Settings2
 } from "lucide-react";
@@ -36,6 +38,8 @@ const navItems: NavItem[] = [
     { label: "Dashboard", href: "/superadmin/dashboard", icon: <LayoutDashboard className="h-5 w-5" /> },
     { label: "Users", href: "/superadmin/dashboard/users", icon: <Users className="h-5 w-5" /> },
     { label: "Admins", href: "/superadmin/dashboard/admins", icon: <UserCog className="h-5 w-5" /> },
+    { label: "VVB Users", href: "/superadmin/dashboard/vvb-users", icon: <UserCheck className="h-5 w-5" /> },
+    { label: "Registry Users", href: "/superadmin/dashboard/registry-users", icon: <Building2 className="h-5 w-5" /> },
     { label: "Projects", href: "/superadmin/dashboard/projects", icon: <FolderKanban className="h-5 w-5" /> },
     { label: "Transactions", href: "/superadmin/dashboard/transactions", icon: <ArrowLeftRight className="h-5 w-5" /> },
     { label: "Marketplace", href: "/superadmin/dashboard/marketplace", icon: <Store className="h-5 w-5" /> },

@@ -756,6 +756,20 @@ export const superadminApi = {
         });
     },
 
+    createVVBUser: async (data: { email: string; password: string; permission_level?: string; profile_data?: any }): Promise<any> => {
+        return superadminRequest<any>('/superadmin/vvb', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    createRegistryUser: async (data: { email: string; password: string; permission_level?: string; profile_data?: any }): Promise<any> => {
+        return superadminRequest<any>('/superadmin/registry', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
     // Tasks
     getTasks: async (params: { page?: number; page_size?: number; task_type?: string; status?: string } = {}): Promise<any> => {
         const searchParams = new URLSearchParams();

@@ -538,52 +538,6 @@ export default function BasicInfoWizardPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="latitude">Latitude *</Label>
-                                    <Input
-                                        id="latitude"
-                                        type="number"
-                                        step="any"
-                                        placeholder="e.g., 26.2389"
-                                        value={formData.latitude}
-                                        onChange={(e) => setFormData({ ...formData, latitude: e.target.value })}
-                                        className="h-11"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="longitude">Longitude *</Label>
-                                    <Input
-                                        id="longitude"
-                                        type="number"
-                                        step="any"
-                                        placeholder="e.g., 73.0243"
-                                        value={formData.longitude}
-                                        onChange={(e) => setFormData({ ...formData, longitude: e.target.value })}
-                                        className="h-11"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Map Preview */}
-                            {formData.latitude && formData.longitude && (
-                                <div className="p-4 rounded-lg border bg-muted/30">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <MapPin className="h-4 w-4 text-primary" />
-                                        <span className="font-medium text-sm">Location Preview</span>
-                                    </div>
-                                    <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center relative overflow-hidden">
-                                        <iframe
-                                            src={`https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(formData.longitude) - 0.02}%2C${parseFloat(formData.latitude) - 0.02}%2C${parseFloat(formData.longitude) + 0.02}%2C${parseFloat(formData.latitude) + 0.02}&layer=mapnik&marker=${formData.latitude}%2C${formData.longitude}`}
-                                            className="w-full h-full border-0"
-                                            loading="lazy"
-                                        />
-                                    </div>
-                                    <p className="text-xs text-muted-foreground mt-2">
-                                        📍 {formData.latitude}, {formData.longitude}
-                                    </p>
-                                </div>
-                            )}
 
                             <div className="p-4 rounded-lg border-2 border-dashed bg-muted/30">
                                 <div className="text-center">
@@ -988,7 +942,7 @@ export default function BasicInfoWizardPage() {
             </main>
 
             {/* Sticky Footer */}
-            <footer className="fixed bottom-0 left-0 right-0 bg-card border-t shadow-lg z-50">
+            <footer className="fixed bottom-0 left-0 right-0 lg:left-72 bg-card border-t shadow-lg z-50">
                 <div className="container mx-auto px-4">
                     <div className="h-16 flex items-center justify-between">
                         {/* Left: Back button */}

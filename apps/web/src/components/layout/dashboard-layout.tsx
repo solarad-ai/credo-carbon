@@ -304,7 +304,7 @@ export default function DashboardLayout({
             )}>
                 {/* Logo Header */}
                 <div className={cn(
-                    "h-20 mt-2 flex items-center border-b border-slate-100 dark:border-slate-700/50 transition-all duration-300",
+                    "h-20 mt-4 flex items-center border-b border-slate-100 dark:border-slate-700/50 transition-all duration-300",
                     sidebarCollapsed ? "justify-center px-2" : "gap-4 px-6"
                 )}>
                     <div className={cn(

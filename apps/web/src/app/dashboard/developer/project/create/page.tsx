@@ -121,9 +121,10 @@ export default function CreateProjectPage() {
     const [selectedType, setSelectedType] = useState<string | null>(null);
     const [isCreating, setIsCreating] = useState(false);
 
-    const handleCreateProject = async () => {
-        if (!selectedType) return;
+    const handleCreateProject = async (projectTypeId: string) => {
+        if (!projectTypeId) return;
 
+        setSelectedType(projectTypeId);
         setIsCreating(true);
 
         try {
@@ -135,8 +136,8 @@ export default function CreateProjectPage() {
                     "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    name: `New ${projectTypes.find(t => t.id === selectedType)?.name} Project`,
-                    project_type: selectedType.toUpperCase(),
+                    name: `New ${projectTypes.find(t => t.id === projectTypeId)?.name} Project`,
+                    project_type: projectTypeId.toUpperCase(),
                     status: "DRAFT",
                 }),
             });
@@ -147,12 +148,12 @@ export default function CreateProjectPage() {
             } else {
                 console.error("Failed to create project");
                 // For demo, navigate anyway
-                router.push(`/dashboard/developer/project/new/wizard/basic-info?type=${selectedType}`);
+                router.push(`/dashboard/developer/project/new/wizard/basic-info?type=${projectTypeId}`);
             }
         } catch (error) {
             console.error("Error creating project:", error);
             // For demo, navigate anyway
-            router.push(`/dashboard/developer/project/new/wizard/basic-info?type=${selectedType}`);
+            router.push(`/dashboard/developer/project/new/wizard/basic-info?type=${projectTypeId}`);
         } finally {
             setIsCreating(false);
         }
@@ -199,7 +200,7 @@ export default function CreateProjectPage() {
                                     : "border-transparent hover:border-border",
                                 type.hoverBorder
                             )}
-                            onClick={() => setSelectedType(type.id)}
+                            onClick={() => handleCreateProject(type.id)}
                         >
                             <CardContent className="p-4">
                                 <div className="flex flex-col items-center text-center gap-2">
@@ -289,7 +290,7 @@ export default function CreateProjectPage() {
                     </Button>
                 </Link>
                 <Button
-                    onClick={handleCreateProject}
+                    onClick={() => selectedType && handleCreateProject(selectedType)}
                     disabled={!selectedType || isCreating}
                     className="gradient-primary text-white btn-shine"
                 >

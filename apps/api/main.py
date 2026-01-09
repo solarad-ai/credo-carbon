@@ -32,12 +32,14 @@ from apps.api.modules.superadmin.router import router as superadmin_router
 from apps.api.modules.vvb.router import router as vvb_router
 from apps.api.modules.registry.router import router as registry_router
 from apps.api.modules.admin.router import router as admin_router
+from apps.api.modules.subscription.router import router as subscription_router
 
 # Import models for SQLAlchemy table creation
 from apps.api.core.models import *  # noqa
 from apps.api.modules.vvb.models import ValidationTask, VerificationTask, VVBQuery, VVBQueryResponse  # noqa
 from apps.api.modules.registry.models import RegistryReview, RegistryQuery, IssuanceRecord, CreditBatch  # noqa
 from apps.api.modules.generation.models import *  # noqa
+from apps.api.modules.subscription.models import Subscription, TierFeature  # noqa
 
 
 # Configure logging
@@ -97,6 +99,7 @@ app.include_router(superadmin_router, prefix="/api")
 app.include_router(vvb_router, prefix="/api")
 app.include_router(registry_router, prefix="/api")
 app.include_router(admin_router, prefix="/api")
+app.include_router(subscription_router, prefix="/api")
 
 
 @app.get("/")

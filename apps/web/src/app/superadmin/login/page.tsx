@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Lock, Mail, Eye, EyeOff, AlertCircle } from "lucide-react";
+import Link from "next/link";
+import { Shield, Lock, Mail, Eye, EyeOff, AlertCircle, Home } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,6 +40,15 @@ export default function SuperAdminLoginPage() {
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
             </div>
+
+            {/* Home Button */}
+            <Link
+                href="/"
+                className="absolute top-6 left-6 z-20 flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+            >
+                <Home className="h-5 w-5" />
+                <span className="text-sm font-medium">Back to Home</span>
+            </Link>
 
             <Card className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border-slate-700/50 shadow-2xl relative z-10">
                 <CardHeader className="text-center pb-6">

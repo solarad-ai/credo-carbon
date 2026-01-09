@@ -192,6 +192,70 @@ export const projectApi = {
     },
 };
 
+// ============ SUBSCRIPTION API (User-facing) ============
+
+export interface UserSubscription {
+    id: number;
+    user_id: number;
+    tier: string;
+    tier_name: string;
+    custom_limits: Record<string, any>;
+    addons: string[];
+    billing_cycle: string | null;
+    valid_until: string | null;
+    assigned_by: number | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface TierFeature {
+    id: number;
+    tier: string;
+    feature_key: string;
+    feature_name: string;
+    feature_description: string | null;
+    is_included: boolean;
+    limits: Record<string, any>;
+}
+
+export interface FeatureCheckResult {
+    feature_key: string;
+    has_access: boolean;
+    tier: string;
+    limits: Record<string, any> | null;
+    message: string | null;
+}
+
+export const subscriptionApi = {
+    /** Get current user's subscription */
+    getMySubscription: async (): Promise<UserSubscription> => {
+        return apiRequest<UserSubscription>('/subscription/me');
+    },
+
+    /** Get all features available for current user's tier */
+    getMyFeatures: async (): Promise<TierFeature[]> => {
+        return apiRequest<TierFeature[]>('/subscription/features');
+    },
+
+    /** Check if current user has access to a specific feature */
+    checkFeature: async (featureKey: string): Promise<FeatureCheckResult> => {
+        return apiRequest<FeatureCheckResult>('/subscription/check', {
+            method: 'POST',
+            body: JSON.stringify({ feature_key: featureKey }),
+        });
+    },
+
+    /** Get all tier definitions */
+    getAllTiers: async (): Promise<any[]> => {
+        return apiRequest<any[]>('/subscription/tiers');
+    },
+
+    /** Get specific tier details */
+    getTier: async (tier: string): Promise<any> => {
+        return apiRequest<any>(`/subscription/tiers/${tier}`);
+    },
+};
+
 // ============ NOTIFICATION API ============
 
 export interface Notification {
@@ -757,14 +821,14 @@ export const superadminApi = {
     },
 
     createVVBUser: async (data: { email: string; password: string; permission_level?: string; profile_data?: any }): Promise<any> => {
-        return superadminRequest<any>('/superadmin/vvb', {
+        return superadminRequest<any>('/superadmin/vvb-users', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     },
 
     createRegistryUser: async (data: { email: string; password: string; permission_level?: string; profile_data?: any }): Promise<any> => {
-        return superadminRequest<any>('/superadmin/registry', {
+        return superadminRequest<any>('/superadmin/registry-users', {
             method: 'POST',
             body: JSON.stringify(data),
         });
@@ -988,6 +1052,53 @@ export const superadminApi = {
     },
     deleteEmailTemplate: async (id: number): Promise<any> => {
         return superadminRequest<any>(`/superadmin/config/email-templates/${id}`, { method: 'DELETE' });
+    },
+
+    // ===== Subscriptions & Tiers =====
+    getSubscriptions: async (params: { page?: number; page_size?: number; tier?: string; search?: string } = {}): Promise<any> => {
+        const searchParams = new URLSearchParams();
+        if (params.page) searchParams.append('page', params.page.toString());
+        if (params.page_size) searchParams.append('page_size', params.page_size.toString());
+        if (params.tier) searchParams.append('tier', params.tier);
+        if (params.search) searchParams.append('search', params.search);
+        return superadminRequest<any>(`/superadmin/subscriptions?${searchParams.toString()}`);
+    },
+
+    getTierDefinitions: async (): Promise<any[]> => {
+        return superadminRequest<any[]>('/superadmin/subscriptions/tiers');
+    },
+
+    getTierDefinition: async (tier: string): Promise<any> => {
+        return superadminRequest<any>(`/superadmin/subscriptions/tiers/${tier}`);
+    },
+
+    getUserSubscription: async (userId: number): Promise<any> => {
+        return superadminRequest<any>(`/superadmin/users/${userId}/subscription`);
+    },
+
+    assignUserSubscription: async (userId: number, data: { tier: string; custom_limits?: any; addons?: string[]; billing_cycle?: string; valid_until?: string }): Promise<any> => {
+        return superadminRequest<any>(`/superadmin/users/${userId}/subscription`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    createTierFeature: async (data: { tier: string; feature_key: string; feature_name: string; feature_description?: string; is_included?: boolean; limits?: any }): Promise<any> => {
+        return superadminRequest<any>('/superadmin/subscriptions/tiers/features', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    updateTierFeature: async (featureId: number, data: { feature_name?: string; feature_description?: string; is_included?: boolean; limits?: any }): Promise<any> => {
+        return superadminRequest<any>(`/superadmin/subscriptions/tiers/features/${featureId}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    deleteTierFeature: async (featureId: number): Promise<any> => {
+        return superadminRequest<any>(`/superadmin/subscriptions/tiers/features/${featureId}`, { method: 'DELETE' });
     },
 };
 

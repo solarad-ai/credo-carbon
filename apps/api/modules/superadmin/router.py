@@ -147,13 +147,14 @@ def create_vvb_user(
         raise HTTPException(status_code=400, detail="Email already registered")
     
     # Create VVB user
+    profile = vvb_data.profile_data or {}
     vvb_user = User(
         email=vvb_data.email,
         password_hash=get_password_hash(vvb_data.password),
         role=UserRole.VVB,
         is_active=True,
         is_verified=True,
-        profile_data={"name": vvb_data.name, "organization": vvb_data.organization or ""}
+        profile_data={"name": profile.get("name", ""), "organization": profile.get("organization", "")}
     )
     db.add(vvb_user)
     db.commit()
@@ -179,13 +180,14 @@ def create_registry_user(
         raise HTTPException(status_code=400, detail="Email already registered")
     
     # Create Registry user
+    profile = registry_data.profile_data or {}
     registry_user = User(
         email=registry_data.email,
         password_hash=get_password_hash(registry_data.password),
         role=UserRole.REGISTRY,
         is_active=True,
         is_verified=True,
-        profile_data={"name": registry_data.name, "organization": registry_data.organization or ""}
+        profile_data={"name": profile.get("name", ""), "organization": profile.get("organization", "")}
     )
     db.add(registry_user)
     db.commit()
@@ -803,3 +805,111 @@ def delete_email_template(
     if not service.delete_email_template(template_id):
         raise HTTPException(status_code=404, detail="Email template not found")
     return {"message": "Email template deleted"}
+
+
+# ===== Subscription Management =====
+from apps.api.modules.subscription.service import SubscriptionService
+from apps.api.modules.subscription.models import SubscriptionTier
+from apps.api.modules.subscription.schemas import (
+    SubscriptionAssign, SubscriptionResponse, SubscriptionListResponse,
+    TierDefinition, TierFeatureCreate, TierFeatureUpdate, TierFeatureResponse,
+    SubscriptionTierEnum
+)
+
+
+def get_subscription_service(db: Session = Depends(get_db)) -> SubscriptionService:
+    return SubscriptionService(db)
+
+
+@router.get("/subscriptions", response_model=SubscriptionListResponse)
+def get_all_subscriptions(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, le=100),
+    tier: Optional[str] = None,
+    search: Optional[str] = None,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Get paginated list of all user subscriptions"""
+    return service.get_all_subscriptions(page, page_size, tier, search)
+
+
+@router.get("/subscriptions/tiers")
+def get_tier_definitions(
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Get all tier definitions with features"""
+    return service.get_all_tier_definitions()
+
+
+@router.get("/subscriptions/tiers/{tier}", response_model=TierDefinition)
+def get_tier_definition(
+    tier: SubscriptionTierEnum,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Get specific tier definition"""
+    return service.get_tier_definition(SubscriptionTier(tier.value))
+
+
+@router.put("/users/{user_id}/subscription", response_model=SubscriptionResponse)
+def assign_user_subscription(
+    user_id: int,
+    data: SubscriptionAssign,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Assign or update subscription tier for a user"""
+    subscription = service.assign_subscription(user_id, data, admin.id)
+    return service.get_subscription_response(subscription)
+
+
+@router.get("/users/{user_id}/subscription", response_model=SubscriptionResponse)
+def get_user_subscription(
+    user_id: int,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Get subscription for a specific user"""
+    subscription = service.get_user_subscription(user_id)
+    return service.get_subscription_response(subscription)
+
+
+# ===== Tier Feature Configuration =====
+@router.post("/subscriptions/tiers/features")
+def create_tier_feature(
+    data: TierFeatureCreate,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Create a new feature for a tier"""
+    feature = service.create_tier_feature(data)
+    return {"message": "Tier feature created", "id": feature.id}
+
+
+@router.put("/subscriptions/tiers/features/{feature_id}")
+def update_tier_feature(
+    feature_id: int,
+    data: TierFeatureUpdate,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Update a tier feature"""
+    feature = service.update_tier_feature(feature_id, data)
+    if not feature:
+        raise HTTPException(status_code=404, detail="Tier feature not found")
+    return {"message": "Tier feature updated"}
+
+
+@router.delete("/subscriptions/tiers/features/{feature_id}")
+def delete_tier_feature(
+    feature_id: int,
+    admin: User = Depends(get_current_superadmin),
+    service: SubscriptionService = Depends(get_subscription_service)
+):
+    """Delete a tier feature"""
+    if not service.delete_tier_feature(feature_id):
+        raise HTTPException(status_code=404, detail="Tier feature not found")
+    return {"message": "Tier feature deleted"}
+

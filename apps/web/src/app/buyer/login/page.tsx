@@ -233,6 +233,15 @@ export default function BuyerLoginPage() {
                             </Link>
                         </p>
                     </div>
+
+                    <div className="mt-4 text-center">
+                        <Link
+                            href="/"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                        >
+                            ← Back to Home
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

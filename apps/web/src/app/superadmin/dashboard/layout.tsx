@@ -22,7 +22,8 @@ import {
     UserCheck,
     Building2,
     ListTodo,
-    Settings2
+    Settings2,
+    CreditCard
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,8 @@ interface NavItem {
 const navItems: NavItem[] = [
     { label: "Dashboard", href: "/superadmin/dashboard", icon: <LayoutDashboard className="h-5 w-5" /> },
     { label: "Users", href: "/superadmin/dashboard/users", icon: <Users className="h-5 w-5" /> },
+    { label: "Subscriptions", href: "/superadmin/dashboard/subscriptions", icon: <CreditCard className="h-5 w-5" /> },
+    { label: "Tier Config", href: "/superadmin/dashboard/tier-config", icon: <Settings2 className="h-5 w-5" /> },
     { label: "Admins", href: "/superadmin/dashboard/admins", icon: <UserCog className="h-5 w-5" /> },
     { label: "VVB Users", href: "/superadmin/dashboard/vvb-users", icon: <UserCheck className="h-5 w-5" /> },
     { label: "Registry Users", href: "/superadmin/dashboard/registry-users", icon: <Building2 className="h-5 w-5" /> },

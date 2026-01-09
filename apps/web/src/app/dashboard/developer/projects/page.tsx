@@ -35,6 +35,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { FeatureGate } from "@/components/FeatureGate";
 
 interface Project {
     id: number;
@@ -149,12 +150,14 @@ export default function ProjectsListPage() {
                     <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Projects</h1>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{projects.length} projects total</p>
                 </div>
-                <Link href="/dashboard/developer/project/create">
-                    <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:opacity-90 shadow-lg">
-                        <Plus className="mr-2 h-4 w-4" />
-                        New Project
-                    </Button>
-                </Link>
+                <FeatureGate feature="dev.registry_onboarding">
+                    <Link href="/dashboard/developer/project/create">
+                        <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:opacity-90 shadow-lg">
+                            <Plus className="mr-2 h-4 w-4" />
+                            New Project
+                        </Button>
+                    </Link>
+                </FeatureGate>
             </div>
 
             {/* Filters */}

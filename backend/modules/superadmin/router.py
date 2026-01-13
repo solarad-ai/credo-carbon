@@ -138,8 +138,10 @@ def create_vvb_user(
     db: Session = Depends(get_db)
 ):
     """Create a new VVB user"""
-    from backend.modules.auth.service import AuthService, get_password_hash
+    from passlib.context import CryptContext
     from backend.core.models import UserRole
+    
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     
     # Check if email already exists
     existing = db.query(User).filter(User.email == vvb_data.email).first()
@@ -150,7 +152,7 @@ def create_vvb_user(
     profile = vvb_data.profile_data or {}
     vvb_user = User(
         email=vvb_data.email,
-        password_hash=get_password_hash(vvb_data.password),
+        password_hash=pwd_context.hash(vvb_data.password),
         role=UserRole.VVB,
         is_active=True,
         is_verified=True,
@@ -171,8 +173,10 @@ def create_registry_user(
     db: Session = Depends(get_db)
 ):
     """Create a new Registry user"""
-    from backend.modules.auth.service import AuthService, get_password_hash
+    from passlib.context import CryptContext
     from backend.core.models import UserRole
+    
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     
     # Check if email already exists
     existing = db.query(User).filter(User.email == registry_data.email).first()
@@ -183,7 +187,7 @@ def create_registry_user(
     profile = registry_data.profile_data or {}
     registry_user = User(
         email=registry_data.email,
-        password_hash=get_password_hash(registry_data.password),
+        password_hash=pwd_context.hash(registry_data.password),
         role=UserRole.REGISTRY,
         is_active=True,
         is_verified=True,

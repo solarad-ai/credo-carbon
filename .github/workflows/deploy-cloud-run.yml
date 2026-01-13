@@ -63,9 +63,11 @@ jobs:
             --region ${{ env.REGION }} \
             --allow-unauthenticated \
             --port 8080 \
+            --update-env-vars ENV="prod" \
+            --update-env-vars CLOUD_PROVIDER="gcp" \
             --update-env-vars DATABASE_URL="${{ secrets.DATABASE_URL }}" \
             --update-env-vars SECRET_KEY="${{ secrets.SECRET_KEY }}" \
-            --update-env-vars CORS_ORIGINS="https://credocarbon-web-641001192587.asia-south2.run.app"
+            --update-env-vars CORS_ORIGINS="http://localhost:3000,http://127.0.0.1:3000,https://credocarbon-web-641001192587.asia-south2.run.app"
 
   # Build and deploy Web
   deploy-web:

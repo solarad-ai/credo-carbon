@@ -7,7 +7,10 @@ import {
     Search,
     X,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    AlertCircle,
+    CheckCircle2,
+    Loader2
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,6 +29,11 @@ interface RegistryUser {
     profile_data: any;
 }
 
+interface FormMessage {
+    type: 'success' | 'error';
+    text: string;
+}
+
 export default function RegistryUsersPage() {
     const [registryUsers, setRegistryUsers] = useState<RegistryUser[]>([]);
     const [loading, setLoading] = useState(true);
@@ -41,6 +49,7 @@ export default function RegistryUsersPage() {
         registry_name: "",
     });
     const [submitting, setSubmitting] = useState(false);
+    const [formMessage, setFormMessage] = useState<FormMessage | null>(null);
 
     useEffect(() => {
         fetchRegistryUsers();
@@ -69,6 +78,7 @@ export default function RegistryUsersPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitting(true);
+        setFormMessage(null);
         try {
             await superadminApi.createRegistryUser({
                 email: formData.email,
@@ -78,11 +88,17 @@ export default function RegistryUsersPage() {
                     registry_name: formData.registry_name
                 },
             });
-            setShowForm(false);
+            setFormMessage({ type: 'success', text: 'Registry user created successfully!' });
             setFormData({ email: "", password: "", name: "", registry_name: "" });
             fetchRegistryUsers();
+            // Auto-close form after success
+            setTimeout(() => {
+                setShowForm(false);
+                setFormMessage(null);
+            }, 2000);
         } catch (err: any) {
-            alert(err.message || "Failed to create Registry user");
+            const errorMessage = err.message || "Failed to create Registry user";
+            setFormMessage({ type: 'error', text: errorMessage });
         } finally {
             setSubmitting(false);
         }
@@ -112,6 +128,20 @@ export default function RegistryUsersPage() {
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {/* Form Message */}
+                            {formMessage && (
+                                <div className={`flex items-center gap-2 p-3 rounded-lg ${formMessage.type === 'success'
+                                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                        : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                                    }`}>
+                                    {formMessage.type === 'success' ? (
+                                        <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                                    ) : (
+                                        <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                                    )}
+                                    <span className="text-sm">{formMessage.text}</span>
+                                </div>
+                            )}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label>Name</Label>
@@ -120,6 +150,7 @@ export default function RegistryUsersPage() {
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         placeholder="Registry user name"
                                         required
+                                        disabled={submitting}
                                         className="dark:bg-slate-700 dark:border-slate-600"
                                     />
                                 </div>
@@ -130,6 +161,7 @@ export default function RegistryUsersPage() {
                                         onChange={(e) => setFormData({ ...formData, registry_name: e.target.value })}
                                         placeholder="e.g., Gold Standard, Verra"
                                         required
+                                        disabled={submitting}
                                         className="dark:bg-slate-700 dark:border-slate-600"
                                     />
                                 </div>
@@ -142,6 +174,7 @@ export default function RegistryUsersPage() {
                                     placeholder="registry@example.com"
                                     type="email"
                                     required
+                                    disabled={submitting}
                                     className="dark:bg-slate-700 dark:border-slate-600"
                                 />
                             </div>
@@ -153,13 +186,19 @@ export default function RegistryUsersPage() {
                                     placeholder="Strong password"
                                     type="password"
                                     required
+                                    disabled={submitting}
                                     className="dark:bg-slate-700 dark:border-slate-600"
                                 />
                             </div>
                             <div className="flex gap-2 justify-end">
-                                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                                <Button type="button" variant="outline" onClick={() => { setShowForm(false); setFormMessage(null); }} disabled={submitting}>Cancel</Button>
                                 <Button type="submit" disabled={submitting} className="bg-teal-600 hover:bg-teal-700">
-                                    {submitting ? "Creating..." : "Create Registry User"}
+                                    {submitting ? (
+                                        <>
+                                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                            Creating...
+                                        </>
+                                    ) : "Create Registry User"}
                                 </Button>
                             </div>
                         </form>

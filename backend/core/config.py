@@ -183,8 +183,20 @@ class Settings(BaseSettings):
     
     @property
     def cors_origins_list(self) -> List[str]:
-        """Get CORS origins as a list."""
-        return [origin.strip() for origin in self.cors_origins.split(",")]
+        """Get CORS origins as a list, including production origins when in prod."""
+        origins = [origin.strip() for origin in self.cors_origins.split(",")]
+        
+        # Always include production origins when in prod environment
+        if self.env == "prod":
+            prod_origins = [
+                "https://credocarbon-web-641001192587.asia-south2.run.app",
+                "https://dashboard.credocarbon.com",
+            ]
+            for origin in prod_origins:
+                if origin not in origins:
+                    origins.append(origin)
+        
+        return origins
     
     @property
     def is_production(self) -> bool:

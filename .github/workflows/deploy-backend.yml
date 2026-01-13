@@ -39,12 +39,11 @@ jobs:
 
       - name: Build Backend Docker image
         run: |
-          docker build -f backend/Dockerfile \
-            --build-context backend=./backend \
+          cd backend && docker build \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:prod-${{ env.BUILD_ID }} \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:${{ env.GIT_COMMIT_SHORT }} \
             -t ${{ env.ARTIFACT_REPO }}/prod/credocarbon-api:latest \
-            ./backend
+            .
 
       - name: Push Backend image
         run: |

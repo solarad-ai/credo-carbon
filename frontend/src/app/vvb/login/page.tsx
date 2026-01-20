@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ClipboardCheck, Lock, Mail, Eye, EyeOff, AlertCircle, Home } from "lucide-react";
+import Image from "next/image";
+import { Lock, Mail, Eye, EyeOff, AlertCircle, Home } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -70,8 +71,8 @@ export default function VVBLoginPage() {
 
             <Card className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border-slate-700/50 shadow-2xl relative z-10">
                 <CardHeader className="text-center pb-6">
-                    <div className="mx-auto w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30">
-                        <ClipboardCheck className="h-8 w-8 text-white" />
+                    <div className="mx-auto mb-4">
+                        <Image src="/logo.png" alt="CredoCarbon" width={220} height={55} className="object-contain" priority />
                     </div>
                     <CardTitle className="text-2xl font-bold text-white">VVB Portal</CardTitle>
                     <CardDescription className="text-slate-400">

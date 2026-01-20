@@ -121,7 +121,7 @@ export default function VVBDashboardLayout({
                     <div className={`h-16 flex items-center border-b border-slate-200 dark:border-slate-700 ${sidebarCollapsed ? "justify-center px-2" : "justify-between px-4"}`}>
                         <Link href="/vvb/dashboard">
                             {sidebarCollapsed ? (
-                                <Image src="/logo.png" alt="CredoCarbon" width={48} height={48} className="object-contain" priority />
+                                <Image src="/logo-icon.png" alt="CredoCarbon" width={48} height={48} className="object-contain" priority />
                             ) : (
                                 <Image src="/logo.png" alt="CredoCarbon" width={160} height={60} className="object-contain" priority />
                             )}

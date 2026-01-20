@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
     { label: "Features", href: "#features" },
@@ -19,13 +20,15 @@ export function LandingHeader() {
             <div className="container mx-auto px-4">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-blue-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-shadow">
-                            <Leaf className="h-5 w-5 text-white" />
-                        </div>
-                        <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                            CredoCarbon
-                        </span>
+                    <Link href="/" className="flex items-center group">
+                        <Image
+                            src="/logo.png"
+                            alt="CredoCarbon"
+                            width={200}
+                            height={50}
+                            className="object-contain"
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

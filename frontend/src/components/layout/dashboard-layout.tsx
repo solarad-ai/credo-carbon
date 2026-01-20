@@ -309,9 +309,9 @@ export default function DashboardLayout({
                     sidebarCollapsed ? "justify-center px-4" : "gap-4 px-6"
                 )}>
                     {sidebarCollapsed ? (
-                        <Image src="/logo.png" alt="CredoCarbon" width={48} height={48} className="object-contain" priority />
+                        <Image src="/logo-icon.png" alt="CredoCarbon" width={48} height={48} className="object-contain" priority />
                     ) : (
-                        <Image src="/logo.png" alt="CredoCarbon" width={200} height={80} className="object-contain" priority />
+                        <Image src="/logo.png" alt="CredoCarbon" width={180} height={60} className="object-contain" priority />
                     )}
                 </div>
 

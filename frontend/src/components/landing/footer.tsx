@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Leaf } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = [
     {
@@ -34,13 +34,8 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {/* Brand */}
                     <div className="lg:col-span-2">
-                        <Link href="/" className="flex items-center gap-2 mb-6">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-blue-600 flex items-center justify-center">
-                                <Leaf className="h-5 w-5 text-white" />
-                            </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                                CredoCarbon
-                            </span>
+                        <Link href="/" className="flex items-center mb-6">
+                            <Image src="/logo.png" alt="CredoCarbon" width={180} height={45} className="object-contain" />
                         </Link>
                         <p className="text-slate-400 text-sm mb-6 max-w-sm">
                             Enterprise-grade carbon credit management platform. Unified MRV, Registry, and Trading stack for the carbon market.

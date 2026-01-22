@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Leaf, Eye, EyeOff, ArrowRight, Loader2, Check } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, Loader2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -139,11 +140,8 @@ export default function BuyerSignupPage() {
                 </div>
 
                 <div className="relative z-10 flex flex-col justify-center p-12">
-                    <Link href="/" className="flex items-center gap-3 mb-12">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-ocean-500 to-ocean-600 flex items-center justify-center shadow-lg">
-                            <Leaf className="h-6 w-6 text-white" />
-                        </div>
-                        <span className="text-2xl font-bold text-gradient">CredoCarbon</span>
+                    <Link href="/" className="flex items-center mb-12">
+                        <Image src="/logo.png" alt="CredoCarbon" width={280} height={70} className="object-contain" priority />
                     </Link>
 
                     <h1 className="text-4xl font-bold mb-6 text-foreground">
@@ -175,11 +173,8 @@ export default function BuyerSignupPage() {
             <div className="w-full lg:w-3/5 flex items-center justify-center p-8 bg-background overflow-y-auto">
                 <div className="w-full max-w-xl">
                     <div className="lg:hidden mb-8 text-center">
-                        <Link href="/" className="inline-flex items-center gap-2">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-ocean-500 to-ocean-600 flex items-center justify-center">
-                                <Leaf className="h-5 w-5 text-white" />
-                            </div>
-                            <span className="text-xl font-bold text-gradient">CredoCarbon</span>
+                        <Link href="/" className="inline-flex items-center">
+                            <Image src="/logo.png" alt="CredoCarbon" width={200} height={50} className="object-contain" priority />
                         </Link>
                     </div>
 

@@ -151,8 +151,8 @@ export function HeroSection() {
                         style={{ animationDelay: "0.5s" }}
                     >
                         {[
-                            { value: "6+", label: "Global Registries" },
-                            { value: "10+", label: "Project Types" },
+                            { value: "48+", label: "Global Registries" },
+                            { value: "70+", label: "Project Types" },
                             { value: "100%", label: "Compliant" },
                             { value: "Real-time", label: "Dashboard" },
                         ].map((stat, index) => (

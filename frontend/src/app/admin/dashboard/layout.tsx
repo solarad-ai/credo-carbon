@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { adminApi } from "@/lib/api";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const menuItems = [
     { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -147,6 +148,7 @@ export default function AdminDashboardLayout({
                     </Button>
 
                     <div className="flex items-center gap-4 ml-auto">
+                        <ThemeToggle />
                         <div className="text-right">
                             <p className="text-sm font-medium text-slate-900 dark:text-white">
                                 {user?.profile_data?.name || user?.email}

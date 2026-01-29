@@ -28,6 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface BuyerStats {
     total_credits: number;
@@ -109,7 +110,7 @@ export default function BuyerDashboardPage() {
     return (
         <div className="flex min-h-screen">
             {/* Sidebar */}
-            <aside className="hidden lg:flex flex-col w-64 border-r bg-card">
+            <aside className="hidden lg:flex flex-col w-64 border-r bg-card overflow-hidden">
                 {/* Logo */}
                 <div className="h-16 flex items-center gap-3 px-6 border-b">
                     <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-ocean-500 to-ocean-600 flex items-center justify-center">
@@ -119,7 +120,7 @@ export default function BuyerDashboardPage() {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-1">
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     <div className="mb-4">
                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 mb-2">
                             Marketplace
@@ -177,6 +178,7 @@ export default function BuyerDashboardPage() {
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
+                        <ThemeToggle />
                         <Button variant="ghost" size="icon" className="relative">
                             <Bell className="h-5 w-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-ocean-500 rounded-full"></span>

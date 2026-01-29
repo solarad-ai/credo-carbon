@@ -137,10 +137,10 @@ export function DashboardSidebar({ className, role, closeMobile, collapsed }: Si
 
     return (
         <TooltipProvider delayDuration={0}>
-            <div className={cn("h-full flex flex-col", className)}>
+            <div className={cn("h-full flex flex-col min-h-0 overflow-hidden", className)}>
                 {/* Navigation Groups */}
                 <nav className={cn(
-                    "flex-1 overflow-y-auto py-6 space-y-6",
+                    "flex-1 min-h-0 overflow-y-auto py-6 space-y-6 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent",
                     collapsed ? "px-2" : "px-4"
                 )}>
                     {routeGroups.map((group) => (
@@ -316,7 +316,7 @@ export default function DashboardLayout({
                 </div>
 
                 {/* Sidebar Navigation */}
-                <DashboardSidebar role={role} className="flex-1" collapsed={sidebarCollapsed} />
+                <DashboardSidebar role={role} className="flex-1 min-h-0 overflow-hidden" collapsed={sidebarCollapsed} />
 
                 {/* Collapse Toggle & Logout */}
                 <div className="p-4 border-t border-slate-100 dark:border-slate-700/50 space-y-3">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,6 +22,11 @@ export default function BuyerLoginPage() {
         password: "",
         rememberMe: false,
     });
+
+    // Force light mode on login page
+    useEffect(() => {
+        document.documentElement.classList.remove("dark");
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
